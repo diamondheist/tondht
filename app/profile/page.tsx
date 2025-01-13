@@ -14,7 +14,7 @@ interface UserData {
 declare global {
   interface Window {
     Telegram?: {
-      WebApp: any;
+      WebApp: any; // eslint-disable-line @typescript-eslint/no-explicit-any
     };
   }
 }
