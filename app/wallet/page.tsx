@@ -75,30 +75,32 @@ export default function Home() {
   }
 
   return (
-    <div className="text-center p-5 rounded-lg shadow-lg max-w-4xl mx-auto">
+    <div className="flex flex-col justify-center items-center p-2 rounded-lg shadow-lg max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-gray-400 mb-6">Wallet</h1>
       {/* Pass the balance to DHTBalanceCard */}
       <DHTBalanceCard balance={balance} imageSrc="/coin.png" />
       
       {/* You can implement the TONBalanceCard similarly as needed */}
       <TONBalanceCard balance={balance} imageSrc="/ton-coin.png" />
+      
+      <div className='text-center'>
+        {tonWalletAddress ? (
+            <div className="flex flex-col items-center">
+            <p className="mb-4">Wallet Address : {formatAddress(tonWalletAddress)}</p>
+            <button 
+            onClick={handleWalletAction} 
+            className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out"><WalletIcon className="h-5 w-5" /> Disconnect Wallet</button>
+            </div>
+        ) : (
+            <button 
+            onClick={handleWalletAction}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 transition"><WalletIcon className="h-5 w-5" /> Connect TON Wallet</button>
+        )
 
-      {tonWalletAddress ? (
-        <div className="flex flex-col items-center">
-          <p className="mb-4">Wallet Address : {formatAddress(tonWalletAddress)}</p>
-          <button 
-           onClick={handleWalletAction} 
-           className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out"><WalletIcon className="h-5 w-5" /> Disconnect Wallet</button>
-        </div>
-      ) : (
-        <button 
-        onClick={handleWalletAction}
-         className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition"><WalletIcon className="h-5 w-5" /> Connect TON Wallet</button>
-      )
+        }
+      </div>
 
-      }
-
-      <h1 className="text-3xl font-semibold text-gray-400 mt-6 mb-6">Transaction History</h1>
+      <h1 className="text-3xl font-semibold text-gray-200 mt-6 mb-6">Transaction History</h1>
      
     </div>
   );
