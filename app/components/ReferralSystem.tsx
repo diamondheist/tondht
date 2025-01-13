@@ -7,12 +7,8 @@ interface ReferralSystemProps {
 }
 
 declare global {
-  interface Window {
-    Telegram?: {
-      WebApp: {
-        openTelegramLink: (url: string) => void;
-      };
-    };
+  interface TelegramWebApp {
+    openTelegramLink: (url: string) => void;
   }
 }
 
