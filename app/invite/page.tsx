@@ -4,21 +4,18 @@ import ReferralSystem from '../components/ReferralSystem'
 import { useEffect, useState } from 'react'
 
 declare global {
-    interface Window {
-      Telegram?: {
-        WebApp: {
-          ready: () => void;
-          initData: string;
-          initDataUnsafe: {
-            user?: {
-              id: number;
-            };
-            start_param?: string;
+    interface WebApp {
+        ready: () => void;
+        initData: string;
+        initDataUnsafe: {
+          user?: {
+            id: number;
           };
-        } & any;
-      };
-    }
+          start_param?: string;
+        };
+      }
   }
+
 
 export default function Home() {
   const [initData, setInitData] = useState('')
