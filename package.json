@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@telegram-apps/sdk": "^2.11.3",
     "@ton/core": "^0.59.1",
     "@ton/ton": "^15.1.0",
     "@tonconnect/sdk": "^3.0.5",
     "@tonconnect/ui": "^2.0.9",
     "@tonconnect/ui-react": "^2.0.9",
+    "@twa-dev/sdk": "github:twa-dev/sdk",
     "next": "14.2.23",
     "react": "^18",
     "react-dom": "^18"

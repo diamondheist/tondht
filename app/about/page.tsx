@@ -2,7 +2,7 @@
 const About = () => {
   return (
     <div className="p-2">
-     <div className="mt-2 text-lg leading-7 text-white-200 backdrop-blur-xl p-2 ">
+     <div className="mt-2 text-sm leading-7 text-white-200 backdrop-blur-xl p-2 ">
         <h1 className="font-bold text-2xl text-blue-600">▎Welcome to Diamond Heist:</h1>
         <span className="font-semibold block text-l text-indigo-700 mt-2">
           Your Ultimate Crypto Mining Adventure!
