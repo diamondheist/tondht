@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { WebApp } from '@twa-dev/types'
 
 interface UserData {
   id: number;
@@ -14,7 +15,7 @@ interface UserData {
 declare global {
   interface Window {
     Telegram?: {
-      WebApp: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+      WebApp: WebApp; 
     };
   }
 }

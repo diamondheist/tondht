@@ -12,12 +12,12 @@ declare global {
   }
 }
 
-const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) => {
+const ReferralSystem: React.FC<ReferralSystemProps> = ({ initData, userId, startParam }) => {
   const [referrals, setReferrals] = useState<string[]>([]);
   const [referrer, setReferrer] = useState<string | null>(null);
   const [showCopied, setShowCopied] = useState(false);
   
-  const INVITE_URL = "https://t.me/DiamondheistBot/diamondheist";
+  const INVITE_URL = "https://t.me/Diamondheistbot/DHT";
 
   useEffect(() => {
     const checkReferral = async () => {
