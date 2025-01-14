@@ -1,13 +1,16 @@
-'use client'
+'use client';
+
+import Link from 'next/link';
 
 interface UpgradeButtonProps {
-  onClick: () => void;
+  href: string; // Link to the upgrade page
   text?: string;
 }
-const UpgradeButton = ({ onClick, text = "Button Text" }: UpgradeButtonProps) => {
+
+const UpgradeButton = ({ href, text = "Upgrade Now" }: UpgradeButtonProps) => {
   return (
-    <button
-      onClick={onClick}
+    <Link
+      href={href}
       className="box-border relative inline-flex items-center justify-center w-full px-6 py-2 overflow-hidden font-semibold text-white text-sm transition-all duration-300 bg-indigo-700 rounded-full cursor-pointer group ring-offset-2 ring-1 ring-indigo-300 ring-offset-indigo-200 hover:ring-offset-indigo-500 ease focus:outline-none"
     >
       <span className="absolute bottom-0 right-0 w-8 h-20 -mb-8 -mr-5 transition-all duration-300 ease-out transform rotate-45 translate-x-1 bg-white opacity-10 group-hover:translate-x-0"></span>
@@ -29,7 +32,7 @@ const UpgradeButton = ({ onClick, text = "Button Text" }: UpgradeButtonProps) =>
         </svg>
         {text}
       </span>
-    </button>
+    </Link>
   );
 };
 

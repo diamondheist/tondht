@@ -47,9 +47,6 @@ export default function HomePage() {
     alert(`Claimed ${minedAmount} DHT! New Balance: ${newBalance}`);
   };
 
-  const handleUpgrade = () => {
-    alert('Upgrade Miner feature coming soon!');
-  };
 
 
   return (
@@ -119,10 +116,8 @@ export default function HomePage() {
                 text="Claim DHT"
                 disabled={minedAmount < 1000}
               />
-              <UpgradeButton 
-                onClick={handleUpgrade} 
-                text="Upgrade Miner" 
-              />
+              <UpgradeButton href="/upgrade" text="Upgrade" />
+
             </div>
           </div>
         </div>
