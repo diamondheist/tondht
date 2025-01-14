@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { WebApp } from '@twa-dev/types'
 
 interface UserData {
   id: number;
@@ -12,13 +11,7 @@ interface UserData {
   is_premium?: boolean;
 }
 
-declare global {
-  interface Window {
-    Telegram?: {
-      WebApp: any; 
-    };
-  }
-}
+
 
 const Profile = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
