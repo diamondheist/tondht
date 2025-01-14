@@ -13,8 +13,8 @@ model User {
   username   String?
   firstName  String?
   lastName   String?
-  balance     Int     @default(500)
-  hashrate    Int     @default(1)
+  balance    Int     @default(500)
+  hashrate   Int     @default(1)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }

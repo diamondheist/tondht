@@ -17,22 +17,16 @@ export default function Home() {
   const [notification, setNotification] = useState('')
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-      const tg = window.Telegram.WebApp
-      tg.ready()
+    if (window.Telegram?.WebApp) {
+      const webAppData = window.Telegram.WebApp.initDataUnsafe;
 
-      const initData = tg.initData || ''
-      const initDataUnsafe = tg.initDataUnsafe || {}
-
-      console.log(initData);
-
-      if (initDataUnsafe.user) {
+      if (webAppData.user) {
         fetch('/api/user', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(initDataUnsafe.user),
+          body: JSON.stringify(webAppData.user),
         })
           .then((res) => res.json())
           .then((data) => {
