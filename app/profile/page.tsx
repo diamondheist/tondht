@@ -15,7 +15,7 @@ interface UserData {
 declare global {
   interface Window {
     Telegram?: {
-      WebApp: WebApp; 
+      WebApp: any; 
     };
   }
 }
