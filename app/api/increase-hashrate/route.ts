@@ -14,9 +14,9 @@ export async function POST(req: NextRequest) {
             data: { hashrate: { increment: 1 } }
         })
 
-        return NextResponse.json({ success: true, points: updatedUser.points })
+        return NextResponse.json({ success: true, hashrate: updatedUser.hashrate })
     } catch (error) {
-        console.error('Error increasing points:', error)
+        console.error('Error increasing hashrate:', error)
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
     }
 }
