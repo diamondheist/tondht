@@ -20,6 +20,7 @@ export default function Home() {
     if (window.Telegram?.WebApp) {
       const webAppData = window.Telegram.WebApp.initDataUnsafe;
 
+
       if (webAppData.user) {
         fetch('/api/user', {
           method: 'POST',

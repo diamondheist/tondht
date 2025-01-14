@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '../../lib/prisma'
+import { prisma } from '../../../lib/prisma'
 
 export async function POST(req: NextRequest) {
     try {
         const userData = await req.json()
+
+        console.log('Received user data:', userData); // Log here
+
 
         if (!userData || !userData.id) {
             return NextResponse.json({ error: 'Invalid user data' }, { status: 400 })
@@ -30,3 +33,5 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
     }
 }
+
+
