@@ -17,17 +17,20 @@ export default function Home() {
   const [notification, setNotification] = useState('')
 
   useEffect(() => {
-    if (window.Telegram?.WebApp) {
-      const webAppData = window.Telegram.WebApp.initDataUnsafe;
+    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+        const tg = window.Telegram.WebApp;
+        tg.ready(); // Tell Telegram the app is ready
 
-
-      if (webAppData.user) {
+        console.log('WebApp Data:', tg.initDataUnsafe); // Log the full WebApp data
+        
+        if (tg.initDataUnsafe.user) {
+            console.log('User data:', tg.initDataUnsafe.user);
         fetch('/api/user', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(webAppData.user),
+          body: JSON.stringify(tg.initDataUnsafe.user),
         })
           .then((res) => res.json())
           .then((data) => {
