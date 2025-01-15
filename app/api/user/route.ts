@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '../../../lib/prisma'
 
 interface TelegramUser {
-  id: number;
+  id: string;
   first_name?: string;
   last_name?: string;
   username?: string;

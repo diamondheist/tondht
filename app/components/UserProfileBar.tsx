@@ -1,8 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
-import { UserIcon } from '@heroicons/react/24/solid';
-import { QuestionMarkCircleIcon } from '@heroicons/react/24/solid';
+import { QuestionMarkCircleIcon, UserIcon } from '@heroicons/react/24/solid';
 
 export default function UserProfileBar() {
   const router = useRouter();
@@ -19,7 +18,7 @@ export default function UserProfileBar() {
       {/* Help Icon */}
       <div 
         className="border border-gray-400 rounded-full p-1 flex items-center justify-center cursor-pointer" 
-        onClick={() => router.push('/about')}
+        onClick={() => router.push('/faq')}
       >
         <QuestionMarkCircleIcon className="w-5 h-5 text-white" />
       </div>

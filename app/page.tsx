@@ -7,6 +7,7 @@ import DHTBalanceCard from './components/DHTBalanceCard';
 import TONBalanceCard from './components/TONBalanceCard';
 import Ticker from './components/Ticker';
 import UserProfileBar from './components/UserProfileBar';
+import ProfileCopyButton from './components/ProfileCopyButton';
 
 export default function HomePage() {
   const [balance, setBalance] = useState(100); // Initial balance
@@ -117,6 +118,8 @@ export default function HomePage() {
                 disabled={minedAmount < 1000}
               />
               <UpgradeButton href="/upgrade" text="Upgrade" />
+
+              <ProfileCopyButton />
 
             </div>
           </div>
