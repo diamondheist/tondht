@@ -52,7 +52,7 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ initData, userId, start
     const inviteLink = `${INVITE_URL}?startapp=${userId}`;
     const shareText = 'Join me on this awesome Telegram mini app! 🚀';
     const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent(shareText)}`;
-    window.Telegram.WebApp.openTelegramLink(fullUrl);
+    window.open(fullUrl);
   };
 
   const handleCopyLink = () => {
