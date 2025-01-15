@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { WebApp } from '@twa-dev/types'
+
 
 declare global {
     interface Window {
@@ -17,20 +17,16 @@ export default function Home() {
   const [notification, setNotification] = useState('')
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-        const tg = window.Telegram.WebApp;
-        tg.ready(); // Tell Telegram the app is ready
-
-        console.log('WebApp Data:', tg.initDataUnsafe); // Log the full WebApp data
-        
-        if (tg.initDataUnsafe.user) {
-            console.log('User data:', tg.initDataUnsafe.user);
+    if (window.Telegram?.WebApp) {
+        const webAppData = window.Telegram.WebApp.initDataUnsafe;
+        if (webAppData.user) {
+            console.log('User data:', webAppData.user);
         fetch('/api/user', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(tg.initDataUnsafe.user),
+          body: JSON.stringify(webAppData.user),
         })
           .then((res) => res.json())
           .then((data) => {
