@@ -1,18 +1,19 @@
-datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
-}
 
 generator client {
   provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   telegramId Int     @unique
   username   String?
-  firstName  String?
-  lastName   String?
+  firstname  String?
+  lastname   String?
   hashrate   Int     @default(0)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt

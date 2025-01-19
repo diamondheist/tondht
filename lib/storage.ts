@@ -3,7 +3,7 @@ interface ReferralData {
     referredBy: { [userId: string]: string };
   }
   
-  const storage: ReferralData = {
+  let storage: ReferralData = {
     referrals: {},
     referredBy: {}
   };

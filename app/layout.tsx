@@ -16,7 +16,6 @@ export default function RootLayout({
         <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
       </head>
       <body className="antialiased min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/background.jpg')" }}>
-       <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
         <TonConnectUIProvider manifestUrl="https://moccasin-implicit-eel-888.mypinata.cloud/ipfs/bafkreiay7dqpdv7ca4ss5lhwtixa7rhl4kji74aqyr3y6kfwrpikd63bva">
         <div className="flex flex-col min-h-screen">
             {/* Main content */}
