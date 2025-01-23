@@ -15,7 +15,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userData }) => {
           <div className="absolute inset-0">
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.3),transparent)] opacity-50"></div>
           </div>
-
+  
           {/* Premium Badge */}
           {userData.is_premium && (
             <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-yellow-600 px-4 py-2 rounded-full shadow-lg">
@@ -27,7 +27,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userData }) => {
               </div>
             </div>
           )}
-
+  
           {/* Profile Image */}
           <div className="absolute -bottom-16 w-full flex justify-center">
             <div className="relative group">
@@ -47,7 +47,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userData }) => {
             </div>
           </div>
         </div>
-
+  
         {/* Profile Content */}
         <div className="pt-20 pb-8 px-8">
           <div className="text-center">
@@ -58,7 +58,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userData }) => {
               <p className="text-blue-200 mt-2 text-lg">@{userData.username}</p>
             )}
           </div>
-
+  
           {userData.bio && (
             <div className="mt-8">
               <div className="backdrop-blur-md bg-white/5 rounded-xl p-6 border border-white/10">
@@ -67,10 +67,57 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userData }) => {
               </div>
             </div>
           )}
+  
+          {/* Additional Details */}
+          <div className="mt-8">
+            <div className="backdrop-blur-md bg-white/5 rounded-xl p-6 border border-white/10">
+              {/* User ID */}
+              <div className="flex items-center justify-between text-blue-200 mb-4">
+                <span className="flex items-center space-x-2">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a4 4 0 110 8 4 4 0 010-8zm-6 12a6 6 0 0112 0H4z" />
+                  </svg>
+                  <span>My ID</span>
+                </span>
+                <span className="text-blue-100 font-medium">{userData.id}</span>
+              </div>
+  
+              {/* Language */}
+              <div className="flex items-center justify-between text-blue-200 mb-4">
+                <span className="flex items-center space-x-2">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M6.5 3.5A1.5 1.5 0 018 2h4a1.5 1.5 0 011.5 1.5v13a1.5 1.5 0 01-1.5 1.5H8a1.5 1.5 0 01-1.5-1.5v-13z" />
+                  </svg>
+                  <span>Language</span>
+                </span>
+                <span className="text-blue-100 font-medium">{userData.language_code || "en"}</span>
+              </div>
+  
+              {/* Invite Friends */}
+              <div className="flex items-center justify-between text-blue-200 mb-4">
+                <span className="flex items-center space-x-2">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a6 6 0 00-6 6v6h12V8a6 6 0 00-6-6z" />
+                  </svg>
+                  <span>Invite Friends</span>
+                </span>
+                <span className="text-blue-100 font-medium">→</span>
+              </div>
+  
+              {/* Other Options */}
+              <div className="flex flex-col space-y-4">
+                <button className="text-blue-200 hover:underline text-left">Contact Support</button>
+                <button className="text-blue-200 hover:underline text-left">FAQ</button>
+                <button className="text-blue-200 hover:underline text-left">Legal Information</button>
+                <button className="text-blue-200 hover:underline text-left">Rankings & Leagues (Soon)</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
+  
 };
 
 export default ProfileCard;
