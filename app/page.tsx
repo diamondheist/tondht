@@ -5,7 +5,6 @@ import UpgradeButton from './components/UpgradeButton';
 import ClaimButton from './components/ClaimButton';
 import DHTBalanceCard from './components/DHTBalanceCard';
 import TONBalanceCard from './components/TONBalanceCard';
-import Ticker from './components/Ticker';
 import UserProfileBar from './components/UserProfileBar';
 
 export default function HomePage() {
@@ -50,7 +49,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen p-2">
       <div className="max-w-l mx-auto">
-        <Ticker />
+        
         
         {/* Balance Cards */}
         <div className="mb-">

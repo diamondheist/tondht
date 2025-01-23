@@ -1,45 +1,11 @@
 'use client';
-import { useEffect, useState } from 'react';
-import ProfileCard from '../components/ProfileCard';
-import { saveUserData } from '@/lib/users';
-import { TelegramUser } from '@/types/telegram';
 
-declare global {
-  interface Window {
-    Telegram?: {
-      WebApp: {
-        ready: () => void;
-        initData: string;
-        initDataUnsafe: {
-          user?: TelegramUser;
-          start_param?: string;
-        };
-      };
-    };
-  }
-}
+import ProfileCard from '../components/ProfileCard';
+import { useUser } from '@/context/UserContext';
+
 
 const ProfilePage = () => {
-  const [userData, setUserData] = useState<TelegramUser | null>(null);
-
-  useEffect(() => {
-    const fetchAndSaveUserData = async () => {
-      try {
-        if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-          const webAppData = window.Telegram.WebApp.initDataUnsafe;
-          
-          if (webAppData.user) {
-            setUserData(webAppData.user);
-            await saveUserData(webAppData.user);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching or saving user data:', error);
-      }
-    };
-
-    fetchAndSaveUserData();
-  }, []);
+  const { userData } = useUser()
 
   if (!userData) {
     return (
