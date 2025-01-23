@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-const ReferralSystem: React.FC<ReferralSystemProps> = ({ initData, userId, startParam }) => {
+const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) => {
   const [referrals, setReferrals] = useState<string[]>([]);
   const [referrer, setReferrer] = useState<string | null>(null);
   const [showCopied, setShowCopied] = useState(false);
