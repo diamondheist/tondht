@@ -47,8 +47,6 @@ export default function HomePage() {
     alert(`Claimed ${minedAmount} DHT! New Balance: ${newBalance}`);
   };
 
-
-
   return (
     <div className="min-h-screen p-2">
       <div className="max-w-l mx-auto">
@@ -116,7 +114,7 @@ export default function HomePage() {
                 text="Claim DHT"
                 disabled={minedAmount < 1000}
               />
-              <UpgradeButton href="/upgrade" text="Upgrade" />
+              <UpgradeButton href="/" text="Upgrade" />
             </div>
           </div>
         </div>
