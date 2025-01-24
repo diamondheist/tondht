@@ -3,7 +3,6 @@ export interface TelegramUser {
     first_name: string;
     last_name?: string;
     username?: string;
-    bio?: string;
     language_code?: string;
     is_premium?: boolean;
     photo_url?: string;

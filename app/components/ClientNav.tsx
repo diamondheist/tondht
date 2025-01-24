@@ -2,15 +2,15 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { HomeIcon, UserGroupIcon, BriefcaseIcon, WalletIcon } from '@heroicons/react/24/solid';
+import { HomeIcon, UserGroupIcon, BriefcaseIcon, WalletIcon } from '@heroicons/react/24/outline';
 
 export default function ClientNav() {
    // Get the current pathname
   const pathname = usePathname(); 
 
   return (
-    <nav className="fixed bottom-0 w-full rounded-lg bg-white shadow-lg border-t border-gray-100 z-10">
-      <div className="max-w-lg mx-auto flex justify-around text-gray-600 items-center h-16">
+    <nav className="fixed bottom-0 w-full rounded-lg backdrop-blur-sm bg-white/5 shadow-lg border-t border-white z-10">
+      <div className="max-w-lg mx-auto flex justify-around text-white items-center h-16">
         <Link
           href="/"
           className={`flex-1 flex flex-col justify-center items-center h-full transition-colors ${

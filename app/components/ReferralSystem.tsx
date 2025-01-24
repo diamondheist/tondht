@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 interface ReferralSystemProps {
-  initData: string;
   userId: string;
   startParam: string;
-}
-
-declare global {
-  interface TelegramWebApp {
-    openTelegramLink: (url: string) => void;
-  }
 }
 
 const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) => {
@@ -34,8 +27,8 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
       if (userId) {
         const response = await fetch(`/api/referrals?userId=${userId}`);
         const data = await response.json();
-        setReferrals(data.referrals);
-        setReferrer(data.referrer);
+        setReferrals(data.referrals || []);
+        setReferrer(data.referrer || null);
       }
     };
 
@@ -44,11 +37,6 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
   }, [userId, startParam]);
 
   const handleInviteFriend = () => {
-    if (!window.Telegram?.WebApp) {
-      console.warn('Telegram WebApp is not available');
-      return;
-    }
-
     const inviteLink = `${INVITE_URL}?startapp=${userId}`;
     const shareText = 'Join me on this awesome Telegram mini app! 🚀';
     const fullUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent(shareText)}`;
@@ -73,16 +61,16 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
       <div className="flex flex-col space-y-4">
         <button
           onClick={handleInviteFriend}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+          className="bg-indigo-700 hover:bg-indigo-900 text-white font-semibold py-3 px-6 rounded-full border-t transition-colors duration-200"
         >
           Invite Friend
         </button>
-        
+      
         <button
           onClick={handleCopyLink}
-          className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+          className="backdrop-blur-lg bg-white/5 hover:bg-indigo-400 text-indigo font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
         >
-          {showCopied ? 'Link Copied!' : 'Copy Invite Link'}
+          {showCopied ? 'Link Copied!' : 'Copy invite Link'}
         </button>
       </div>
 
@@ -95,7 +83,7 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
             {referrals.map((referral, index) => (
               <div
                 key={index}
-                className="bg-gray-50 hover:bg-gray-100 px-4 py-3 rounded-lg transition-colors duration-200"
+                className="bg-gray-50 hover:bg-gray-100 px-6 py-3 rounded-lg transition-colors duration-200"
               >
                 User {referral}
               </div>
@@ -105,7 +93,7 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
       )}
 
       {showCopied && (
-        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-75 text-white px-4 py-2 rounded-lg">
+        <div className="flex justify-center mt-4 backdrop-blur-lg bg-white/5 bg-opacity-75 text-white px-4 py-2 rounded-full">
           Invite link copied!
         </div>
       )}

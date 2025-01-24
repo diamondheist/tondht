@@ -20,7 +20,6 @@ declare global {
 }
 
 export default function Home() {
-  const [initData, setInitData] = useState('')
   const [userId, setUserId] = useState('')
   const [startParam, setStartParam] = useState('')
 
@@ -29,7 +28,6 @@ export default function Home() {
       if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
         const WebApp = window.Telegram.WebApp;
         WebApp.ready();
-        setInitData(WebApp.initData);
         setUserId(WebApp.initDataUnsafe.user?.id.toString() || '');
         setStartParam(WebApp.initDataUnsafe.start_param || '');
       }
@@ -39,9 +37,9 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold mb-8">Telegram Referral Demo</h1>
-      <ReferralSystem initData={initData} userId={userId} startParam={startParam} />
+    <main className="flex min-h-screen flex-col items-center mt-16">
+      <h1 className="text-4xl font-bold mb-8">Refer A Friend</h1>
+      <ReferralSystem userId={userId} startParam={startParam} />
     </main>
   )
 }
