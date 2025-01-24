@@ -63,6 +63,7 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
     setTimeout(() => setShowCopied(false), 2000);
   };
 
+
   return (
     <div className="w-full max-w-md mx-auto p-6">
       {referrer && (
