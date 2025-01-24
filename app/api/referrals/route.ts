@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: 'Referral created successfully' }, { status: 201 });
   } catch (error) {
+    console.error('Referral creation error:', error);
     return NextResponse.json({ error: 'Failed to process referral' }, { status: 500 });
   }
 }
@@ -73,6 +74,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ referrals, referrer });
   } catch (error) {
+    console.error('Referral fetch error:', error);
     return NextResponse.json({ error: 'Failed to fetch referrals' }, { status: 500 });
   }
 }
