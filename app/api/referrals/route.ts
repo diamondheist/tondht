@@ -1,49 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { doc, setDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { 
-  collection, 
-  query, 
-  where, 
-  getDocs, 
-  addDoc, 
-  serverTimestamp 
-} from 'firebase/firestore';
 
 export async function POST(req: NextRequest) {
   try {
     const { userId, referrerId } = await req.json();
-    console.log('Referral POST Request:', { userId, referrerId });
 
-    if (!userId || !referrerId) {
-      return NextResponse.json({ error: 'Missing user or referrer ID' }, { status: 400 });
+    if (!userId || !referrerId || userId === referrerId) {
+      return NextResponse.json({ error: 'Invalid referral parameters' }, { status: 400 });
     }
 
-    if (userId === referrerId) {
-      return NextResponse.json({ error: 'Cannot refer yourself' }, { status: 400 });
+    const referralRef = doc(db, 'referrals', `${userId}_${referrerId}`);
+    const referralDoc = await getDoc(referralRef);
+
+    if (!referralDoc.exists()) {
+      const referralData = {
+        userId,
+        referrerId,
+        timestamp: new Date().toISOString(),
+        bonusEarned: false
+      };
+
+      await setDoc(referralRef, referralData);
     }
 
-    // Check if referral already exists
-    const referralQuery = query(
-      collection(db, 'referrals'),
-      where('userId', '==', userId),
-      where('referrerId', '==', referrerId)
-    );
-    const existingReferralSnapshot = await getDocs(referralQuery);
-
-    if (!existingReferralSnapshot.empty) {
-      return NextResponse.json({ message: 'Referral already exists' }, { status: 200 });
-    }
-
-    // Create new referral
-    const referralDoc = await addDoc(collection(db, 'referrals'), {
-      userId,
-      referrerId,
-      timestamp: serverTimestamp(),
-      bonusEarned: false
-    });
-
-    console.log('Referral created:', referralDoc.id);
-    return NextResponse.json({ message: 'Referral created successfully' }, { status: 201 });
+    return NextResponse.json({ message: 'Referral processed' }, { status: 200 });
   } catch (error) {
     console.error('Referral creation error:', error);
     return NextResponse.json({ error: 'Failed to process referral' }, { status: 500 });
@@ -78,7 +59,6 @@ export async function GET(req: NextRequest) {
       ? null 
       : referrerSnapshot.docs[0].data().referrerId;
 
-    console.log('Referrals retrieved:', { referrals, referrer });
     return NextResponse.json({ referrals, referrer });
   } catch (error) {
     console.error('Referral fetch error:', error);
