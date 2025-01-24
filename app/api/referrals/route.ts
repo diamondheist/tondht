@@ -12,7 +12,12 @@ import {
 export async function POST(req: NextRequest) {
   try {
     const { userId, referrerId } = await req.json();
-    
+    console.log('Referral POST Request:', { userId, referrerId });
+
+    if (!userId || !referrerId) {
+      return NextResponse.json({ error: 'Missing user or referrer ID' }, { status: 400 });
+    }
+
     if (userId === referrerId) {
       return NextResponse.json({ error: 'Cannot refer yourself' }, { status: 400 });
     }
@@ -30,13 +35,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Create new referral
-    await addDoc(collection(db, 'referrals'), {
+    const referralDoc = await addDoc(collection(db, 'referrals'), {
       userId,
       referrerId,
       timestamp: serverTimestamp(),
       bonusEarned: false
     });
 
+    console.log('Referral created:', referralDoc.id);
     return NextResponse.json({ message: 'Referral created successfully' }, { status: 201 });
   } catch (error) {
     console.error('Referral creation error:', error);
@@ -72,6 +78,7 @@ export async function GET(req: NextRequest) {
       ? null 
       : referrerSnapshot.docs[0].data().referrerId;
 
+    console.log('Referrals retrieved:', { referrals, referrer });
     return NextResponse.json({ referrals, referrer });
   } catch (error) {
     console.error('Referral fetch error:', error);

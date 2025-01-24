@@ -15,20 +15,33 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
   useEffect(() => {
     const checkReferral = async () => {
       if (startParam && userId) {
-        await fetch('/api/referrals', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, referrerId: startParam }),
-        });
+        try {
+          console.log('Attempting to create referral:', { userId, referrerId: startParam });
+          const response = await fetch('/api/referrals', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, referrerId: startParam }),
+          });
+          const result = await response.json();
+          console.log('Referral creation result:', result);
+        } catch (error) {
+          console.error('Error creating referral:', error);
+        }
       }
     };
 
     const fetchReferrals = async () => {
       if (userId) {
-        const response = await fetch(`/api/referrals?userId=${userId}`);
-        const data = await response.json();
-        setReferrals(data.referrals || []);
-        setReferrer(data.referrer || null);
+        try {
+          console.log('Fetching referrals for:', userId);
+          const response = await fetch(`/api/referrals?userId=${userId}`);
+          const data = await response.json();
+          console.log('Referrals fetched:', data);
+          setReferrals(data.referrals || []);
+          setReferrer(data.referrer || null);
+        } catch (error) {
+          console.error('Error fetching referrals:', error);
+        }
       }
     };
 
