@@ -9,7 +9,7 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
   const [referrals, setReferrals] = useState<string[]>([]);
   const [referrer, setReferrer] = useState<string | null>(null);
   const [showCopied, setShowCopied] = useState(false);
-  
+
   const INVITE_URL = "https://t.me/Diamondheistbot/DHT";
 
   useEffect(() => {
@@ -63,7 +63,6 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
     setTimeout(() => setShowCopied(false), 2000);
   };
 
-
   return (
     <div className="w-full max-w-md mx-auto p-6">
       {referrer && (
@@ -79,32 +78,36 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
         >
           Invite Friend
         </button>
-      
+
         <button
           onClick={handleCopyLink}
           className="backdrop-blur-lg bg-white/5 hover:bg-indigo-400 text-indigo font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
         >
-          {showCopied ? 'Link Copied!' : 'Copy invite Link'}
+          {showCopied ? 'Link Copied!' : 'Copy Invite Link'}
         </button>
       </div>
 
-      {referrals.length > 0 && (
-        <div className="mt-8">
-          <h2 className="text-xl font-bold mb-4">
-            Your Referrals ({referrals.length})
-          </h2>
+      <div className="mt-8">
+        <h2 className="text-xl font-bold mb-4">
+          Your Referrals ({referrals.length})
+        </h2>
+        {referrals.length > 0 ? (
           <div className="space-y-2">
             {referrals.map((referral, index) => (
               <div
                 key={index}
-                className="bg-gray-50 hover:bg-gray-100 px-6 py-3 rounded-lg transition-colors duration-200"
+                className="backdrop-blur-lg bg-ehite/5 px-6 py-3 rounded-lg transition-colors duration-200"
               >
                 User {referral}
               </div>
             ))}
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="backdrop-blur-lg bg-white/5 text-white px-4 py-3 rounded-lg">
+            <p>You have no referrals.</p>
+          </div>
+        )}
+      </div>
 
       {showCopied && (
         <div className="flex justify-center mt-4 backdrop-blur-lg bg-white/5 bg-opacity-75 text-white px-4 py-2 rounded-full">
