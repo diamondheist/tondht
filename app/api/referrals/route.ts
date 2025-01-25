@@ -1,5 +1,5 @@
+import { NextRequest, NextResponse } from 'next/server';
 import { saveReferral, getReferrals, getReferrer } from '@/lib/referralService';
-import { NextRequest,NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
