@@ -27,12 +27,20 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
     }
     
+    console.log('Fetching referrals for userId:', userId);
+    
     const referrals = await getReferrals(userId);
     const referrer = await getReferrer(userId);
     
+    console.log('Referrals:', referrals);
+    console.log('Referrer:', referrer);
+    
     return NextResponse.json({ referrals, referrer });
   } catch (error) {
-    console.error('Referral fetch error:', error);
-    return NextResponse.json({ error: 'Failed to fetch referrals' }, { status: 500 });
+    console.error('Full referral fetch error:', error);
+    return NextResponse.json({ 
+      error: 'Failed to fetch referrals', 
+      details: error instanceof Error ? error.message : String(error)
+    }, { status: 500 });
   }
 }
