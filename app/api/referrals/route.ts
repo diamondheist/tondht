@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
     const { userId, referrerId } = await req.json();
     
     if (!userId || !referrerId || userId === referrerId) {
-      return NextResponse.json({ error: 'Invalid referral parameters' }, { status: 400 });
+      return NextResponse.json({ error: 'Missing UserId or ReferrerId' }, { status: 400 });
     }
     
     await saveReferral(userId, referrerId);
@@ -18,13 +18,12 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get('userId');
+    const userId = request.nextUrl.searchParams.get('userId');
     
     if (!userId) {
-      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+      return NextResponse.json({ error: 'Missing UserId' }, { status: 400 });
     }
     
     console.log('Fetching referrals for userId:', userId);

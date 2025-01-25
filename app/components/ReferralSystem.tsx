@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
 interface ReferralSystemProps {
+  initData: string;
   userId: string;
   startParam: string;
 }
 
-const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) => {
+const ReferralSystem: React.FC<ReferralSystemProps> = ({ initData, userId, startParam }) => {
   const [referrals, setReferrals] = useState<string[]>([]);
   const [referrer, setReferrer] = useState<string | null>(null);
   const [showCopied, setShowCopied] = useState(false);
 
   const INVITE_URL = "https://t.me/Diamondheistbot/DHT";
-
+  
+  console.log('Received initData:', initData);
+  
   useEffect(() => {
     const checkReferral = async () => {
       if (userId && startParam) {
@@ -22,8 +25,9 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ userId, referrerId: startParam }),
           });
-          const result = await response.json();
-          console.log('Referral creation result:', result);
+          if(!response.ok) {
+            throw new Error('Failed to create referral');
+          }
         } catch (error) {
           console.error('Error creating referral:', error);
         }
@@ -35,6 +39,7 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ userId, startParam }) =
         try {
           console.log('Fetching referrals for:', userId);
           const response = await fetch(`/api/referrals?userId=${userId}`);
+          if (!response.ok) throw new Error('Failed to fetch referrals');
           const data = await response.json();
           console.log('Referrals fetched:', data);
           setReferrals(data.referrals || []);

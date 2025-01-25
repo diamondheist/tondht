@@ -11,6 +11,7 @@ declare global {
           initDataUnsafe: {
             user?: TelegramUser;
             start_param?: string;
+            initData: string;
           };
         };
       };
@@ -21,13 +22,15 @@ declare global {
     userData: TelegramUser | null;
     isLoading: boolean;
     start_param?: string;
+    initData: string
   }
-  const UserContext = createContext<UserContextType>({ userData: null, isLoading: true, start_param: '' });
+  const UserContext = createContext<UserContextType>({ initData: '', userData: null, isLoading: true, start_param: '' });
   
   export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [userData, setUserData] = useState<TelegramUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [start_param, setStartParam] = useState('')
+    const [initData, setInitData] = useState('')
      
     useEffect(() => {
         const fetchAndSaveUserData = async () => {
@@ -42,6 +45,7 @@ declare global {
                 // Set user data in context
                 setUserData(webAppData.user);
                 setStartParam(webAppData.start_param || '');
+                setInitData(webAppData.initData)
               }
             }
           } catch (error) {
@@ -55,7 +59,7 @@ declare global {
       }, []);
 
       return (
-        <UserContext.Provider value={{ userData, isLoading, start_param }}>
+        <UserContext.Provider value={{ initData,userData, isLoading, start_param }}>
           {children}
         </UserContext.Provider>
       );
