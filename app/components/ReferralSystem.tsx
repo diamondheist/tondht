@@ -14,7 +14,7 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ initData, userId, start
   const [error, setError] = useState<string | null>(null);
 
   const INVITE_URL = "https://t.me/Diamondheistbot/DHT";
-  
+   console.log(initData);
   useEffect(() => {
     const checkReferral = async () => {
       if (userId && startParam) {
