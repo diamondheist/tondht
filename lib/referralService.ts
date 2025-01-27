@@ -1,55 +1,67 @@
 import { doc, setDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
+// Save a referral, updating a single document per user
 export async function saveReferral(userId: string, referrerId: string) {
   try {
-    // Create a unique referral document
-    const referralRef = doc(db, 'referrals', `${userId}_${referrerId}`);
+    const referralRef = doc(db, 'referrals', userId); // Use userId as document ID
     const referralDoc = await getDoc(referralRef);
 
-    if (!referralDoc.exists()) {
-      const referralData = {
+    if (referralDoc.exists()) {
+      // Update the existing document
+      const existingData = referralDoc.data();
+      const referrals = existingData.referrals || []; // Default to empty array if missing
+
+      // Avoid adding duplicate referrerId
+      if (!referrals.includes(referrerId)) {
+        referrals.push(referrerId);
+        await setDoc(referralRef, { ...existingData, referrals }, { merge: true });
+      }
+    } else {
+      // Create a new document for this userId
+      const newReferral = {
         userId,
-        referrerId,
-        timestamp: new Date().toISOString(),
-        bonusEarned: false
+        referrals: [referrerId], // Start with one referrer
+        createdAt: new Date().toISOString(),
       };
 
-      await setDoc(referralRef, referralData);
+      await setDoc(referralRef, newReferral);
     }
   } catch (error) {
     console.error('Error saving referral:', error);
   }
 }
 
+// Get the list of users referred by the given userId
 export async function getReferrals(userId: string): Promise<string[]> {
   try {
-    // Get referrals made by this user
-    const referralsQuery = query(
-      collection(db, 'referrals'),
-      where('referrerId', '==', userId)
-    );
-    const referralsSnapshot = await getDocs(referralsQuery);
+    const referralRef = doc(db, 'referrals', userId);
+    const referralDoc = await getDoc(referralRef);
 
-    return referralsSnapshot.docs.map(doc => doc.data().userId);
+    if (!referralDoc.exists()) {
+      return [];
+    }
+
+    const data = referralDoc.data();
+    return data.referrals || []; // Return referrals array or empty array
   } catch (error) {
     console.error('Error getting referrals:', error);
     return [];
   }
 }
 
+// Get the referrer for a specific userId
 export async function getReferrer(userId: string): Promise<string | null> {
   try {
-    // Get referrer (if exists)
-    const referrerQuery = query(
+    const referralsQuery = query(
       collection(db, 'referrals'),
-      where('userId', '==', userId)
+      where('referrals', 'array-contains', userId)
     );
-    const referrerSnapshot = await getDocs(referrerQuery);
+    const referrerSnapshot = await getDocs(referralsQuery);
 
-    return referrerSnapshot.empty 
-      ? null 
-      : referrerSnapshot.docs[0].data().referrerId;
+    return referrerSnapshot.empty
+      ? null
+      : referrerSnapshot.docs[0].id; // Document ID will be the referrerId
   } catch (error) {
     console.error('Error getting referrer:', error);
     return null;

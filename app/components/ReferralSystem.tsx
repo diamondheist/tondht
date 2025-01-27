@@ -10,26 +10,31 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ initData, userId, start
   const [referrals, setReferrals] = useState<string[]>([]);
   const [referrer, setReferrer] = useState<string | null>(null);
   const [showCopied, setShowCopied] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const INVITE_URL = "https://t.me/Diamondheistbot/DHT";
-  
-  console.log('Received initData:', initData);
   
   useEffect(() => {
     const checkReferral = async () => {
       if (userId && startParam) {
         try {
-          console.log('Attempting to create referral:', { userId, referrerId: startParam });
+          setLoading(true);
+          setError(null); // Reset error before trying
           const response = await fetch('/api/referrals', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ userId, referrerId: startParam }),
           });
-          if(!response.ok) {
-            throw new Error('Failed to create referral');
+          if (!response.ok) throw new Error('Failed to create referral');
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            setError(error.message);
+          } else {
+            setError('An unknown error occurred');
           }
-        } catch (error) {
-          console.error('Error creating referral:', error);
+        } finally {
+          setLoading(false);
         }
       }
     };
@@ -37,15 +42,21 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ initData, userId, start
     const fetchReferrals = async () => {
       if (userId) {
         try {
-          console.log('Fetching referrals for:', userId);
+          setLoading(true);
+          setError(null); // Reset error before trying
           const response = await fetch(`/api/referrals?userId=${userId}`);
           if (!response.ok) throw new Error('Failed to fetch referrals');
           const data = await response.json();
-          console.log('Referrals fetched:', data);
           setReferrals(data.referrals || []);
           setReferrer(data.referrer || null);
-        } catch (error) {
-          console.error('Error fetching referrals:', error);
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            setError(error.message);
+          } else {
+            setError('An unknown error occurred');
+          }
+        } finally {
+          setLoading(false);
         }
       }
     };
@@ -76,6 +87,10 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ initData, userId, start
         </div>
       )}
 
+      {loading && <p className="text-center text-indigo-600">Loading...</p>}
+
+      {error && <p className="text-red-600">{error}</p>}
+
       <div className="flex flex-col space-y-4">
         <button
           onClick={handleInviteFriend}
@@ -101,7 +116,7 @@ const ReferralSystem: React.FC<ReferralSystemProps> = ({ initData, userId, start
             {referrals.map((referral, index) => (
               <div
                 key={index}
-                className="backdrop-blur-lg bg-ehite/5 px-6 py-3 rounded-lg transition-colors duration-200"
+                className="backdrop-blur-lg bg-white/5 px-6 py-3 rounded-lg transition-colors duration-200"
               >
                 User {referral}
               </div>
